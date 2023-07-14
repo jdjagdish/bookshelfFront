@@ -23,32 +23,33 @@ function Login() {
 
     const validateEmail = function () {
 
-        const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
-        if (!emailRegex.test(email) || email === '') {
-            setformError(true)
-            setvalidationMessageEmail('Email should be something@something.com');
+        // const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
+        // if (!emailRegex.test(email) || email === '') {
+        //     setformError(true)
+        //     setvalidationMessageEmail('Email should be something@something.com');
 
-        }
-        else {
-            setformError(false);
-            setvalidationMessageEmail('');
-        }
-        console.log(email)
+        // }
+        // else {
+        //     setformError(false);
+        //     setvalidationMessageEmail('');
+        // }
+        // console.log(email)
 
     }
 
     const validatePassword = function () {
-        const passRegex = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$')
-        if (!passRegex.test(password) || password === '') {
-            setvalidationMessagePass('Password should be 8 letters');            
-            setformError(true)
-        }
+        // const passRegex = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$')
+        // if (!passRegex.test(password) || password === '') {
+        //     setvalidationMessagePass('Password should be 8 letters');            
+        //     setformError(true)
+        // }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        validateEmail();
-        validatePassword();        
+        console.log("executing submit")
+        // validateEmail();
+        // validatePassword();        
         //make a call to backend
         if (!formError) {
             console.log(formError)
@@ -61,7 +62,7 @@ function Login() {
             "email": email,
             "password": password
         };
-        console.log(data);        
+        console.log("login data: ", data);        
 
         try {
             const responseData = await axios.post(signInUrl, data);            
@@ -103,14 +104,14 @@ function Login() {
 
                         <div className="flex flex-col mb-2">
                             <div className=" relative ">
-                                <input onBlur={function (e) { validateEmail(); setEmail(e.target.value) }}
+                                <input onChange={function (e) { validateEmail(); setEmail(e.target.value) }}
                                     label="Email" type="text" placeholder="Email" name="email"
                                     className="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                             </div>
                         </div>
                         <div className="flex flex-col mb-2">
                             <div className=" relative ">
-                                <input onBlur={function (e) { setLoginError(''); setPassword(e.target.value) }}
+                                <input onChange={function (e) { setLoginError(''); setPassword(e.target.value) }}
                                     label="Password" type="password" placeholder="Password" name="password"
                                     className="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
 

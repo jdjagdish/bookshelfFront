@@ -3,23 +3,15 @@ import Gallery from '../components/Gallery';
 import Footer from '../components/Footer';
 import Nav from '../components/Nav';
 import { useContext } from "react";
-import ErrorPage from '../pages/ErrorPage'
 import AuthContext from '../helpers/authContext';
-import Cookies from 'universal-cookie'
 
-
-
-const cookies = new Cookies();
 
 function Browse() {
-  const { isAuthenticated, login } = useContext(AuthContext);
-  const loggedEmail = cookies.get('email')
-  const loggedUsername = cookies.get('loggedUsername')
-
-  login();
+  const { isAuthenticated } = useContext(AuthContext);
+  console.log(useContext(AuthContext))
   
-  console.log(isAuthenticated+loggedEmail+loggedUsername);
-  //checklogin
+  
+  
   if (isAuthenticated) {
     //render dashboard page
     return (
@@ -37,7 +29,7 @@ function Browse() {
     //render 404
     return (
       <div>
-        <ErrorPage />
+        $ 404 PAGE
       </div>
     )
   }

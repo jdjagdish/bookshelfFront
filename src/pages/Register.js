@@ -109,7 +109,7 @@ function Register() {
                               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                  <span className="text-gray-500 sm:text-sm"></span>
                               </div>
-                              <input onBlur={function (e) { setUsername(e.target.value) }}
+                              <input onChange={function (e) { setUsername(e.target.value) }}
                                  label="Username" type="text" placeholder="Username" name="username"
                                  className="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                            </div>
@@ -127,7 +127,7 @@ function Register() {
                               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                  <span className="text-gray-500 sm:text-sm"></span>
                               </div>
-                              <input onBlur={function (e) { setEmail(e.target.value) }}
+                              <input onChange={function (e) { setEmail(e.target.value) }}
                                  label="Email" type="text" placeholder="Email" name="email"
                                  className="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                            </div>

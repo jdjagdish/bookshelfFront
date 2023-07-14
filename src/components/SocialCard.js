@@ -47,14 +47,7 @@ function SocialCard() {
                         </div>
 
                     </div>
-                    <div className="flex justify-space ml-2">
-                        <button className="m-2 px-2 text-white bg-red-400 rounded-full w-1/4 hover:bg-red-600">
-                            Like
-                        </button>
-                        <button className="m-2 px-1 text-white bg-red-400 rounded-full w-1/4 hover:bg-red-600">
-                            Comment
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
 

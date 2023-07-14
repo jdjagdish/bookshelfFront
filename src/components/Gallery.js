@@ -4,20 +4,20 @@ import Book from './Book';
 import { getBookUrl } from "../common/constants";
 
 
-function Table() {
+function Gallery() {
 
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => {   
     getBooks();
-  }, [loading, setLoading])
+  }, [])
   async function getBooks() {
     
 
     try {
       const responseData = await axios.get(getBookUrl);
-      console.log(responseData.data.data);
+      
       setBooks(responseData.data.data)
       setLoading(false);
 
@@ -43,10 +43,10 @@ function Table() {
             {
               books.map((item) => (
                 <Book id={item._id} bookName={item.title}
-                  authorName={item.author}
-                  genre={item.genres[0]}
-                  description={item.description}>
-
+                  authorName={item.title}//authorname
+                  genre={item.title} //genre
+                  description={item.description}
+                  key={item._id}>
                 </Book>
               ))
             }
@@ -59,4 +59,4 @@ function Table() {
     );
 }
 
-export default Table;
+export default Gallery;

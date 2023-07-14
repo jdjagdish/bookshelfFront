@@ -20,7 +20,7 @@ function Dashboard() {
   const loggedEmail = cookies.get('email')
   const loggedUsername = cookies.get('loggedUsername')
 
-  login();
+  // login();
   
   console.log(isAuthenticated+loggedEmail+loggedUsername);
   //checklogin

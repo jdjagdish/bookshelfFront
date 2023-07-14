@@ -1,30 +1,69 @@
 
 import SidebarItem from './SidebarItem'
-import { useState } from 'react'
+import { useState,useEffect } from 'react';
+import axios from 'axios';
+import { getAllBookShelvesUrl } from "../common/constants";
+import authHeader from '../helpers/authHeader';
+
 
 function Sidebar() {
    
    const [newShelfName, setNewShelfName] = useState('')
    const [sidebarItems, setSidebarItems] = useState([
-      { name: 'All', href: '/home', current: true },
-      { name: 'Read', href: '/dashboard', current: false },
-      { name: 'Currently Reading', href: '/browse', current: false },
+      { name: 'All', href: '/home', current: true }
    ])
-
    
-   function createNewShelf() {
-      setSidebarItems([...sidebarItems, { name: newShelfName }]);
-      console.log(sidebarItems)
+   useEffect(() => {      
+      getAllBookShelves();
+    }, []);
+    
+   async function getAllBookShelves() {    
+
+      try {
+        const responseData = await axios.get(getAllBookShelvesUrl,{headers:authHeader()});
+        
+        const shelves = responseData.data.data;
+        
+        let sideBarListItems = [];
+        shelves.forEach((item) => {
+         item.current = false;
+         sideBarListItems.push(item);
+        })
+        setSidebarItems([...sidebarItems,...sideBarListItems]);
+        
+       
+      } catch (error) {
+  
+        console.log(error);
+         
+      }
+    }
+   async function createNewShelf() {
+      
+      try {
+          await axios.post(getAllBookShelvesUrl,{
+            name:newShelfName
+         },
+         {headers:authHeader()}
+         );  
+         setSidebarItems( [...sidebarItems, { name: newShelfName, href: '/home', current: true }])
+   
+       } catch (error) {
+   
+         console.log(error);
+   
+       }
 
    }
+  
    return (
 
       <div className=" ">
          <div className="md:relative mx-auto lg:float-right lg:px-6">
             <ul className="list-reset flex flex-row md:flex-col text-center md:text-left">
                {
-                  sidebarItems.map((item) => (
-                     <SidebarItem name={item.name}
+                  sidebarItems.map((item,id) => (
+                     <SidebarItem name={item.name} current={item.current} id={id} key={id}
                      >
                      </SidebarItem>
                   ))

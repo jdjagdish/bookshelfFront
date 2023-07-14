@@ -13,8 +13,8 @@ function Home() {
   const { isAuthenticated, login } = useContext(AuthContext);
     const loggedUsername = cookies.get('loggedUsername')
 
-  login();
-  
+  //login();
+  console.log("isauth from home", isAuthenticated)
   //checklogin
   if (isAuthenticated) {
     //render home page
