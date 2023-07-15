@@ -10,11 +10,10 @@ import Cookies from 'universal-cookie'
 
 const cookies = new Cookies();
 function Home() {
-  const { isAuthenticated, login } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
     const loggedUsername = cookies.get('loggedUsername')
 
-  //login();
-  console.log("isauth from home", isAuthenticated)
+  
   //checklogin
   if (isAuthenticated) {
     //render home page

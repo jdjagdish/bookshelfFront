@@ -11,55 +11,55 @@ import authHeader from '../helpers/authHeader';
 import Rating from '../components/Rating';
 
 
-
-
 function SingleBook() {
-  let params = useParams()
+  
   const [book, setBook] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedShelf,setSelectedShelf] = useState("All")
   const [shelves,setShelves] = useState([])
-
+  const params = useParams()
   useEffect(() => {
     
+    async function getBooks() {    
+
+      try {
+        const responseData = await axios.get(getBookUrl+params.id);
+        return responseData.data.data;
+        // (responseData.data.data)
+        // setLoading(false);
+      } catch (error) {
+  
+        console.log(error);
+  
+      }
+    }
+    async function getAllBookShelves() {    
+
+      try {
+        const responseData = await axios.get(getAllBookShelvesUrl,{headers:authHeader()});
+        return responseData.data.data;
+        
+        
+      } catch (error) {
+  
+        console.log(error);
+  
+      }
+    }
     Promise.all([getBooks(), getAllBookShelves()]).then((responses) => {
       setBook(responses[0]);
       setShelves(responses[1]);
       setLoading(false);
     })
-  },[])
-  async function getBooks() {    
-
-    try {
-      const responseData = await axios.get(getBookUrl+params.id);
-      return responseData.data.data;
-      // (responseData.data.data)
-      // setLoading(false);
-    } catch (error) {
-
-      console.log(error);
-
-    }
-  }
-  async function getAllBookShelves() {    
-
-    try {
-      const responseData = await axios.get(getAllBookShelvesUrl,{headers:authHeader()});
-      return responseData.data.data;
-      // setShelves(responseData.data.data)
-      // console.log("shelves",responseData)
-      
-    } catch (error) {
-
-      console.log(error);
-
-    }
-  }
+  },[params.id])
+  
+  
   async function addBookToShelve() {    
 
     try {
-      const responseData = await axios.patch(`${addBookToShelveUrl}${params.id}/add/${selectedShelf}`,{},{headers:authHeader()});
-      console.log("addedBook",responseData);
+       await axios.patch(`${addBookToShelveUrl}${params.id}/add/${selectedShelf}`,{},{headers:authHeader()});
+      
+      alert("Book added to "+selectedShelf)
     } catch (error) {
       console.log(error);
     }
@@ -81,8 +81,8 @@ function SingleBook() {
               <div className="lg:w-4/5 mx-auto flex flex-wrap">
                 <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={BookImg} />
                 <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                  <h2 className="text-sm title-font text-gray-500 tracking-widest">{book.author}</h2>
-                  <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{book.title}</h1>
+                  <h2 className="text-lg title-font text-white tracking-widest">{book.title}</h2>
+                  <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{book.author.name}</h1>
 
                   <div className="flex mb-4 text-white">
 
@@ -93,7 +93,7 @@ function SingleBook() {
                   <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                     <div className="flex">
                       <span className="mr-3 text-black">Category</span>
-                      <p className="mr-3 text-white"> {book.genres[0]}</p>
+                      <p className="mr-3 text-white"> {book.genres[0].name}</p>
                     </div>
                     <div className="flex ml-6 items-center">
 

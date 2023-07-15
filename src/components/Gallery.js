@@ -20,7 +20,7 @@ function Gallery() {
       
       setBooks(responseData.data.data)
       setLoading(false);
-
+      
 
     } catch (error) {
 
@@ -28,7 +28,6 @@ function Gallery() {
 
     }
   }
-
 
 
   if (loading)
@@ -43,8 +42,8 @@ function Gallery() {
             {
               books.map((item) => (
                 <Book id={item._id} bookName={item.title}
-                  authorName={item.title}//authorname
-                  genre={item.title} //genre
+                  authorName={item.author.name}//authorname
+                  genre={item.genres[0].name} //genre
                   description={item.description}
                   key={item._id}>
                 </Book>

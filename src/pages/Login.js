@@ -12,7 +12,6 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [validationMessageEmail, setvalidationMessageEmail] = useState('');
-    const [validationMessagePass, setvalidationMessagePass] = useState('');
     const [loginError, setLoginError] = useState('');
     const [formError, setformError] = useState(false);    
 
@@ -23,33 +22,26 @@ function Login() {
 
     const validateEmail = function () {
 
-        // const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
-        // if (!emailRegex.test(email) || email === '') {
-        //     setformError(true)
-        //     setvalidationMessageEmail('Email should be something@something.com');
+        const emailRegex = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
+        if (!emailRegex.test(email) || email === '') {
+            setformError(true)
+            setvalidationMessageEmail('Email should be something@something.com');
 
-        // }
-        // else {
-        //     setformError(false);
-        //     setvalidationMessageEmail('');
-        // }
-        // console.log(email)
+        }
+        else {
+            setformError(false);
+            setvalidationMessageEmail('');
+        }
+        console.log(email)
 
     }
 
-    const validatePassword = function () {
-        // const passRegex = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$')
-        // if (!passRegex.test(password) || password === '') {
-        //     setvalidationMessagePass('Password should be 8 letters');            
-        //     setformError(true)
-        // }
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("executing submit")
-        // validateEmail();
-        // validatePassword();        
+        
+        validateEmail();
+              
         //make a call to backend
         if (!formError) {
             console.log(formError)
@@ -97,14 +89,13 @@ function Login() {
                     </button>
                 </span>
                 <p className='bg-red-300 mt-3 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-red-500 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg'>{validationMessageEmail}</p>
-                <p className='bg-red-300 mt-3 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-red-500 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg'>{validationMessagePass}</p>
                 <p className='bg-green-400 mt-3 hover:bg-green-200 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg'>{loginError}</p>
                 <div className="p-6 mt-8">
                     <form action="#">
 
                         <div className="flex flex-col mb-2">
                             <div className=" relative ">
-                                <input onChange={function (e) { validateEmail(); setEmail(e.target.value) }}
+                                <input onChange={function (e) { setEmail(e.target.value) }}
                                     label="Email" type="text" placeholder="Email" name="email"
                                     className="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                             </div>

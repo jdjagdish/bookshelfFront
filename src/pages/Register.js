@@ -10,8 +10,6 @@ function Register() {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [validationMessageEmail, setvalidationMessageEmail] = useState('');
-   const [validationMessagePass, setvalidationMessagePass] = useState('');
-   const [registerStatus, setRegisterStatus] = useState('false');
    const [registerMsg, setRegisterMsg] = useState('');
    const [formError, setformError] = useState(false)
 
@@ -30,23 +28,10 @@ function Register() {
       console.log(email)
 
    }
-   const validatePassword = function () {
-      const passRegex = new RegExp('^(?=.*?[A-Za-z])(?=.*?[0-9]).{6,}$')
-      if (!passRegex.test(password)) {
-         setvalidationMessagePass('Password should be 8 letters');
-         console.log("Password should be 8 letters")
-         setformError(true)
-      }
-      else {
-         setformError(false);
-         setvalidationMessagePass('');
-      }
-   }
+   
    const handleSubmit = async (e) => {
       e.preventDefault();
       validateEmail();
-      validatePassword();
-      console.log('form submitted');
       //make a call to backend
       if (!formError) {
          signUp();
@@ -62,17 +47,18 @@ function Register() {
       
       try {
          const responseData = await axios.post(signUpUrl, data);
-         console.log(responseData);
+         
          if (responseData.status === 201) {
             setRegisterMsg("Registeration is successful.You can login now");
-            setRegisterStatus(true)
-            console.log("registered login");
+            setUsername("");
+            setPassword("");
+            setEmail("")
+            
          }
       } catch (error) {
-         console.log(error.response.data.err[0]);
-         console.log(error.response.data);
+         
          setRegisterMsg(error.response.data.message)
-         setRegisterStatus(false)
+         
       }
 
    }
@@ -93,8 +79,6 @@ function Register() {
                </button>
             </span>
             <p className='bg-red-300 mt-3 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-red-500 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg'> {validationMessageEmail}</p>
-            <p className='bg-red-300 mt-3 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-red-500 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg'>{validationMessagePass}</p>
-            <p className='bg-red-300 mt-3 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-red-500 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg'>{registerStatus} </p>
             <p className='bg-red-300 mt-3 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-red-500 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg'>{registerMsg} </p>
             <div className="p-6 mt-0">
                <form action="#">
@@ -144,7 +128,7 @@ function Register() {
                               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                  <span className="text-gray-500 sm:text-sm"></span>
                               </div>
-                              <input onBlur={function (e) { setPassword(e.target.value) }}
+                              <input onChange={function (e) { setPassword(e.target.value) }}
                                  label="Password" type="password" placeholder="Password" name="password"
                                  className="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
                            </div>

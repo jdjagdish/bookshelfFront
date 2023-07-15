@@ -30,8 +30,6 @@ function Sidebar() {
          sideBarListItems.push(item);
         })
         setSidebarItems([...sidebarItems,...sideBarListItems]);
-        
-       
       } catch (error) {
   
         console.log(error);
@@ -51,9 +49,7 @@ function Sidebar() {
        } catch (error) {
    
          console.log(error);
-   
        }
-
    }
   
    return (
@@ -63,7 +59,7 @@ function Sidebar() {
             <ul className="list-reset flex flex-row md:flex-col text-center md:text-left">
                {
                   sidebarItems.map((item,id) => (
-                     <SidebarItem name={item.name} current={item.current} id={id} key={id}
+                     <SidebarItem  name={item.name} current={item.current} id={id} key={id}
                      >
                      </SidebarItem>
                   ))

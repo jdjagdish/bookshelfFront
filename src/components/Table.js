@@ -1,12 +1,10 @@
 import BookImg from './../images/book.jpg'
 import Rating from './Rating';
 import SectionContext from '../helpers/sectionContext'
-import bookData from '../data/books.json'
 import { useContext,useEffect, useState } from 'react';
-import { getBookUrl } from "../common/constants";
+import { getBookUrl,getAllBookShelvesUrl } from "../common/constants";
 import axios from 'axios';
-
-
+import authHeader from '../helpers/authHeader';
 
 function Table() {
     const { section } = useContext(SectionContext)
@@ -16,7 +14,6 @@ function Table() {
 
         try {
           const responseData = await axios.get(getBookUrl);
-          console.log("book",responseData.data.data);
           setBooks(responseData.data.data)
         } catch (error) {
           console.log(error);
@@ -24,18 +21,24 @@ function Table() {
         }
       }
 
-
-    function getBooksBySection(section) {
-        return bookData.filter(function (item) {
-            return item.section === section;
-        })
+    async function getBooksBySection(section) {
+        try {
+            const responseData = await axios.get(`${getAllBookShelvesUrl}/${section}`,{headers:authHeader()});
+            
+            setBooks(responseData.data.data.books)
+          } catch (error) {
+            console.log(error);
+      
+          }
     }
 
     useEffect(() => {
         if (section === "All")
             getAllBooks()
         else
-            setBooks(getBooksBySection(section))
+        {
+            getBooksBySection(section)
+        } 
     }, [section])
 
     return (
@@ -58,7 +61,7 @@ function Table() {
                             Rating
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Section
+                            Genre
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Date added
@@ -83,7 +86,7 @@ function Table() {
                                     <Rating bookId={item._id} rating={item.rating} />
                                 </td>
                                 <td className="px-6 py-4">
-                                    <p className="font-medium text-red-600 dark:text-red-500 hover:underline">{item.genres.toString()}</p>
+                                    <p className="font-medium text-red-600 dark:text-red-500 hover:underline">{item.genres[0].name}</p>
                                 </td>
                                 <td className="px-6 py-4">
                                     <p className="font-medium text-red-600 dark:text-red-500 hover:underline">{item.publishDate}</p>

@@ -4,7 +4,7 @@ import SectionContext from '../helpers/sectionContext'
 
 
 function SidebarItem(props) {
-  const { setSection } = useContext(SectionContext)
+  const { setSection} = useContext(SectionContext)
   
   const handleSettingSection = (e) =>{
      setSection(e.target.closest('li').getAttribute('section'));

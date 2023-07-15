@@ -7,22 +7,16 @@ import Footer from '../components/Footer';
 import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
 import SectionProvider from '../helpers/sectionProvider'
-import Cookies from 'universal-cookie'
 
 
-
-const cookies = new Cookies();
 
 function Dashboard() {
 
   const [selectedTab, setSelectedTab] = useState('All')
-  const { isAuthenticated, login } = useContext(AuthContext);
-  const loggedEmail = cookies.get('email')
-  const loggedUsername = cookies.get('loggedUsername')
-
-  // login();
+  const { isAuthenticated } = useContext(AuthContext);
+ 
   
-  console.log(isAuthenticated+loggedEmail+loggedUsername);
+
   //checklogin
   if (isAuthenticated) {
     //render dashboard page
