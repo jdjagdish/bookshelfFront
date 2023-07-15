@@ -32,7 +32,7 @@ function Login() {
             setformError(false);
             setvalidationMessageEmail('');
         }
-        console.log(email)
+        
 
     }
 
@@ -53,8 +53,7 @@ function Login() {
             let data = {
             "email": email,
             "password": password
-        };
-        console.log("login data: ", data);        
+        };       
 
         try {
             const responseData = await axios.post(signInUrl, data);            

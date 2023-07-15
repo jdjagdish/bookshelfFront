@@ -25,7 +25,7 @@ function Register() {
          setformError(false);
          setvalidationMessageEmail('');
       }
-      console.log(email)
+      
 
    }
    

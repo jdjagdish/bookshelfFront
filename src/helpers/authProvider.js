@@ -19,7 +19,8 @@ const AuthProvider = ({ children }) => {
 
   const logout = () => {
     // logic to clear cookies
-    console.log(cookies.remove('jwtToken', "/"));
+    cookies.remove('jwtToken', "/")
+    
     setIsAuthenticated(false);
   };
 

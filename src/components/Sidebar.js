@@ -12,10 +12,8 @@ function Sidebar() {
    const [sidebarItems, setSidebarItems] = useState([
       { name: 'All', href: '/home', current: true }
    ])
-   
-   useEffect(() => {      
-      getAllBookShelves();
-    }, []);
+   // eslint-disable-next-line
+   useEffect(() => {    getAllBookShelves(); }, []); 
     
    async function getAllBookShelves() {    
 
